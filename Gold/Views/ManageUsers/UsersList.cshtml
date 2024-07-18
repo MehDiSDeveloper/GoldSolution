@@ -1,0 +1,88 @@
+﻿@using Gold.Core.DTO.AccountDTO
+@model IEnumerable<ShowUserDTO>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">لیست نقش ها</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">ادمین</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">لیست نقش ها </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div style="margin:15px">
+                    <a class="btn btn-primary" style="display:block;" asp-controller="ManageUsers" asp-action="AddUser">افزودن کاربر</a>
+                </div>
+                <div class="table-responsive bg-white shadow rounded">
+
+                    <table class="table mb-0 table-center">
+                        <thead>
+                            <tr class="shop-list">
+                                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 100px;">نام کاربری</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">نام</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">نام خانوادگی</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">شماره همراه</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 200px;">نقش ها</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">عملیات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if (Model.Any())
+                            {
+
+                                @foreach (var user in Model)
+                                {
+                                    <tr>
+                                        <td class="h6 text-center">@user.UserName</td>
+                                        <td class="h6 text-center">@user.FirstName</td>
+                                        <td class="h6 text-center">@user.LastName</td>
+                                        <td class="h6 text-center">@user.Phone</td>
+                                        <td class="text-center">@user.UserRoles</td>
+
+                                        <td class="text-center">
+                                            <form method="post" asp-controller="ManageUsers" asp-action="DeleteUser" asp-route-uName=@user.UserName>
+                                                <a class="btn btn-pills btn-icon btn-primary qty-btn" asp-controller="ManageUsers" asp-action="EditUser" asp-route-uName=@user.UserName>ویرایش</a>
+                                                <button class="btn btn-pills btn-icon btn-danger qty-btn" type="submit">حذف</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                            else
+                            {
+                                <tr><td><h2>کاربری یافت نشد</h2></td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section>
+

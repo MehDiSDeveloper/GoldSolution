@@ -1,0 +1,215 @@
+﻿@using Gold.Core.DTO.PayDTO
+@model PayBillDTO
+@{
+    ViewData["Title"] = "صفحه پرداخت";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">ایجاد حساب کاربری</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li aria-current="page" class="breadcrumb-item active">صفحه پرداخت </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+
+<section class="section">
+    <div class="container">
+        @if (ViewBag.Errors != null)
+        {
+            <div class="text-red ml">
+                <ul>
+                    @foreach (string error in ViewBag.Errors)
+                    {
+                        <li class="ml">@error</li>
+                    }
+                </ul>
+            </div>
+        }
+        @if (ViewBag.HasError == false)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive bg-white shadow rounded">
+                        <table class="table mb-0 table-center">
+                            <thead>
+                                <tr>
+                                    <th class="border-bottom fw-medium text-center py-3" style="min-width: 300px;">نوع تراکنش</th>
+                                    <th class="border-bottom fw-medium text-center py-3" style="min-width: 160px;">مبلغ</th>
+                                    <th class="border-bottom fw-medium text-center py-3" style="min-width: 160px;">موجودی کیف پول</th>
+                                    <th class="border-bottom fw-medium text-center py-3" style="min-width: 160px;">نیازمند پرداخت</th>
+                                    <th class="border-bottom fw-medium text-center py-3" style="min-width: 160px;">تاریخ ثبت</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr class="shop-list">
+                                    <td class="text-center">@Model.DealType</td>
+                                    <td class="text-center">@Model.TotalCashAmount</td>
+                                    <td class="text-center">@Model.UserCashAsset</td>
+                                    <td class="text-center">@Model.CashToPay</td>
+                                    <td class="text-end fw-medium pe-4">@Model.BillRegDateTime</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div><!--end col-->
+            </div>
+
+            <!--end row-->
+            <div class="col-lg-4 col-md-6 mt-4 pt-2">
+                <a class="btn btn-primary" href="javascript:void(0)">خرید بیشتر</a>
+                <a class="btn btn-soft-primary ms-2" href="javascript:void(0)">به روز رسانی سبد خرید</a>
+            </div>
+            <div class="row">
+
+                <div class="col-lg-4 col-md-4 mt-4 pt-2  @((ViewBag.wallet!="full")?"disabledbutton":"")">
+                    <form method="post" asp-action="Payment" asp-controller="Payment">
+                        <input type="hidden" value="@Model.TotalCashAmount" asp-for="FinalPayment">
+                        <input type="hidden" value="@Model.CashToPay" asp-for="CashToPay">
+                        <input type="hidden" value="@Model.TotalCashAmount" asp-for="TotalCashAmount">
+                        <input type="hidden" value="@Model.Id" asp-for="Id">
+                        <input type="hidden" value="@Model.BillRegDateTime" asp-for="BillRegDateTime">
+                        <input type="hidden" value="wallet" asp-for="PayType">
+                        <input type="hidden" value="withdrawWallet" asp-for="DealType">
+                        <input type="hidden" value="@Model.UserCashAsset" asp-for="UserCashAsset">
+                        <input type="hidden" value="@Model.AssetId" asp-for="AssetId">
+                        <input type="hidden" value="@Model.DealName" asp-for="DealName">
+
+                        <div class="table-responsive bg-white rounded shadow">
+                            <table class="table table-center table-padding mb-0">
+                                <tbody>
+                                    <tr class="bg-success">
+                                        <td class="h6 ps-4 py-3">پرداخت از طریق</td>
+                                        <td class="text-end fw-medium pe-4"><h4>کیف پول</h4></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="h6 ps-4 py-3">موجودی کیف پول</td>
+                                        <td class="text-end fw-medium pe-4">@Model.UserCashAsset</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="h6 fw-semibold ps-4 py-3">مبلغ فاکتور</td>
+                                        <td class="text-end fw-semibold pe-4">@Model.TotalCashAmount</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pt-2 text-end">
+                            <button class="btn bg-success col-12" type="submit">پرداخت از کیف پول</button>
+                        </div>
+                    </form>
+                </div><!--end col-->
+
+                <div class="col-lg-4 col-md-4 mt-4 pt-2  @((ViewBag.wallet!="part")?"disabledbutton":"")">
+                    <form method="post" asp-action="Payment" asp-controller="Payment">
+                        <input type="hidden" value="@Model.CashToPay" asp-for="FinalPayment">
+                        <input type="hidden" value="@Model.CashToPay" asp-for="CashToPay">
+                        <input type="hidden" value="@Model.TotalCashAmount" asp-for="TotalCashAmount">
+                        <input type="hidden" value="@Model.Id" asp-for="Id">
+                        <input type="hidden" value="@Model.BillRegDateTime" asp-for="BillRegDateTime">
+                        <input type="hidden" value="bankwallet" asp-for="PayType">
+                        <input type="hidden" value="deposit" asp-for="DealType">
+                        <input type="hidden" value="@Model.UserCashAsset" asp-for="UserCashAsset">
+                        <input type="hidden" value="@Model.AssetId" asp-for="AssetId">
+
+                        <div class="table-responsive bg-white rounded shadow">
+                            <table class="table table-center table-padding mb-0">
+                                <tbody>
+                                    <tr class="bg-info">
+                                        <td class="h6 ps-4 py-3">پرداخت از طریق</td>
+                                        <td class="text-end fw-medium pe-4"><h4>کیف پول و درگاه بانکی</h4></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="h6 ps-4 py-3">موجودی کیف پول</td>
+                                        <td class="text-end fw-medium pe-4">@Model.UserCashAsset</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="h6 fw-semibold ps-4 py-3">مبلغ فاکتور</td>
+                                        <td class="text-end fw-semibold pe-4">@Model.TotalCashAmount</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="h6 fw-semibold ps-4 py-3">مبلغ قابل پرداخت</td>
+                                        <td class="text-end fw-semibold pe-4">@Model.CashToPay</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class=" pt-2 text-end">
+                            <button class="btn bg-info col-12" type="submit">انتقال به درگاه پرداخت</button>
+                        </div>
+                    </form>
+                </div><!--end col-->
+
+                <div class="col-lg-4 col-md-4 mt-4 pt-2">
+                    <form method="post" asp-action="Payment" asp-controller="Payment">
+                        <input type="hidden" value="@Model.TotalCashAmount" asp-for="FinalPayment">
+                        <input type="hidden" value="@Model.CashToPay" asp-for="CashToPay">
+                        <input type="hidden" value="@Model.TotalCashAmount" asp-for="TotalCashAmount">
+                        <input type="hidden" value="@Model.Id" asp-for="Id">
+                        <input type="hidden" value="@Model.BillRegDateTime" asp-for="BillRegDateTime">
+                        <input type="hidden" value="bank" asp-for="PayType">
+                        <input type="hidden" value="deposit" asp-for="DealType">
+                        <input type="hidden" value="@Model.AssetId" asp-for="AssetId">
+
+
+                        <div class="table-responsive bg-white rounded shadow">
+                            <table class="table table-center table-padding mb-0">
+                                <tbody>
+                                    <tr class="bg-warning">
+                                        <td class="h6 ps-4 py-3">پرداخت از طریق</td>
+                                        <td class="text-end fw-medium pe-4"><h4>درگاه بانکی</h4></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="h6 ps-4 py-3">مبلغ فاکتور</td>
+                                        <td class="text-end fw-medium pe-4">@Model.TotalCashAmount</td>
+                                    </tr>
+                                    <tr class="bg-light">
+                                        <td class="h6 fw-semibold ps-4 py-3">مبلغ قابل پرداخت</td>
+                                        <td class="text-end fw-semibold pe-4">@Model.TotalCashAmount</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pt-2 text-end">
+                            <button class="btn bg-warning col-12" type="submit">انتقال به درگاه پرداخت</button>
+                        </div>
+                    </form>
+
+                </div><!--end col-->
+
+
+            </div>
+
+            <!--end row-->
+        }
+    </div><!--end container-->
+</section>
+
+@section Scripts{
+    <script src="/js/validation/jquery.validate.min.js"></script>
+    <script src="/js/validation/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
+
+
+
+
+

@@ -1,0 +1,97 @@
+﻿@using Gold.Core.DTO.Finance;
+@model IEnumerable<UserGoldToCashDTO>
+@{
+    ViewData["Title"] = "ListOfUserGoldOffers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">لیست نقش ها</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">ادمین</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">لیست درخواست ها</li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+
+<section class="section">
+    <div>
+        <div class="row">
+            <div class="col-12">
+                <div style="margin:15px">
+                    <a class="btn btn-primary" style="display:block;" asp-controller="ManageGold" asp-action="PayAllCashToGolds">پرداخت همه</a>
+                </div>
+                <div class="table-responsive bg-white shadow rounded">
+
+                    <table class="table mb-0 table-center">
+                        <thead>
+                            <tr class="shop-list">
+                                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 300px;">نام</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">نام کاربری</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">شماره همراه</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">مبلغ </th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">اعمال شده</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">وضعیت</th>
+                                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 160px;">عملیات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if (Model.Any())
+                            {
+
+                                @foreach (var Offer in Model)
+                                {
+                                    <tr class="  @(Offer.IsDone ? "text-success" : Offer.GoldExecutedAmount>0 ? "text-primary":"")">
+                                        <td class="h6 text-center"><a href="/ManageUsers/UserPage?id=@Offer.User.Id">@Offer.User.FirstName" "@Offer.User.LastName</a></td>
+                                        <td class="h6 text-center"><a href="/ManageUsers/UserPage?id=@Offer.User.Id">@Offer.User.UserName</a></td>
+                                        <td class="h6 text-center"><a href="/ManageUsers/UserPage?id=@Offer.User.Id">@Offer.User.PhoneNumber</a></td>
+                                        <td class="h6 text-center">@Offer.GoldAmount گرم</td>
+                                        <td class="text-center">@Offer.GoldExecutedAmount گرم</td>
+                                        @if (Offer.IsDone)
+                                        {
+                                            <td class="text-center">انجام شده</td>
+                                        }
+                                        else
+                                        {
+                                            <td class="text-center">انجام نشده</td>
+                                        }
+
+                                        <td class="text-center">
+                                            <form method="post" asp-controller="ManageGold" asp-action="SuspendUGC" asp-route-uName=@Offer.Id>
+                                                <a class="btn btn-pills btn-icon btn-primary qty-btn" asp-controller="ManageGold" asp-action="PayUGC" asp-route-uName=@Offer.Id>اعمال</a>
+                                                <button class="btn btn-pills btn-icon btn-danger qty-btn" type="submit">تعلیق</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+
+                                }
+                            }
+                            else
+                            {
+                                <tr><td><h2>کاربری یافت نشد</h2></td></tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section>
+

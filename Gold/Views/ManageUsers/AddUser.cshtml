@@ -1,0 +1,102 @@
+﻿@using Gold.Core.DTO.AccountDTO
+@using Gold.Core.DTO.RoleDTO
+@model RegisterUserDTO
+@{
+    ViewData["Title"] = "AddUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Roles = ViewBag.Roles as List<ShowRoleDTO>;
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">ایجاد حساب کاربری</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">پنل کاربری</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">ثبت نام </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+
+<div class="section">
+    <div class="container">
+        <div class="col-md-7 col-lg-8">
+            <div class="card rounded shadow p-4 border-0">
+                <h4 class="mb-3">ثبت نام</h4>
+                <div class="container col-md-12">
+                    @if (ViewBag.Errors != null)
+                    {
+                        @foreach (string error in ViewBag.Errors)
+                        {
+                            <span class="row text-bg-danger">@error</span>
+                        }
+                    }
+                </div>
+                <form method="post" asp-controller="ManageUsers" asp-action="AddUser">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="UserName">نام کاربری</label>
+                            <input asp-for="UserName" class="form-control" placeholder="نام کاربری" type="text">
+                            <span class="invalid-feedback" asp-validation-for="UserName"></span>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="FirstName">نام کوچک</label>
+                            <input asp-for="FirstName" class="form-control" placeholder="نام کوچک" type="text">
+                            <span class="invalid-feedback" asp-validation-for="FirstName"></span>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label class="form-label" for="LastName">نام خانوادگی</label>
+                            <input asp-for="LastName" class="form-control" placeholder="نام خانوادگی" type="text">
+                            <span class="invalid-feedback" asp-validation-for="LastName"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="Phone">شماره موبایل</label>
+                            <input asp-for="Phone" class="form-control" placeholder="شماره موبایل" type="text">
+                            <span class="invalid-feedback" asp-validation-for="Phone"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="Password">کلمه عبور <span class="text-muted">(شامل حروف بزرگ ، کوچک و اعداد)</span></label>
+                            <input asp-for="Password" class="form-control" type="password" placeholder="کلمه عبور">
+                            <span class="invalid-feedback" asp-validation-for="Password"></span>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label" for="ConfirmPassword">تکرار کلمه عبور</label>
+                            <input asp-for="ConfirmPassword" class="form-control" type="password" placeholder="تکرار کلمه عبور">
+                            <span class="invalid-feedback" asp-validation-for="ConfirmPassword"></span>
+                        </div>
+                        @if (Roles != null)
+                        {
+                            @foreach (var role in Roles)
+                            {
+                                <div class="col-sm-6">
+                                    <input type="checkbox" name="selectedRoles" value=@role.Name>
+                                    <label class="form-label" for="selectedRoles">@role.Name </label>
+                                </div>
+
+                            }
+                        }
+                        <button class="w-100 btn btn-primary" type="submit">ثبت</button>                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

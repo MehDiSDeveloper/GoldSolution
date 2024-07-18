@@ -1,0 +1,23 @@
+input[type=radio] {
+    appearance: none;
+    padding: 10px;
+    border-radius: 50%;
+    border-color: #329ec2;
+}
+
+    input[type=radio]:checked {
+        background-color: #329ec2;
+    }
+.border-blue-green {
+    border-color: #329ec2 !important;
+}
+.content-blue-green {
+   color: #329ec2 !important;
+}
+.bg-blue-green {
+    background-color: #329ec2 !important;
+}
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
+}

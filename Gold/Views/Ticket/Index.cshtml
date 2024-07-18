@@ -1,0 +1,61 @@
+﻿@model TicketMessageDTO
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="section-title mb-5 pb-2 text-center">
+            <h3>@Model.SetStatus</h3>
+            <h4 class="title mb-3">آیا با مشکلی در سامانه مواجه هستید؟!</h4>
+            <p class="text-muted para-desc mx-auto mb-0">لطفا ابتدا به بخش سوالات متداول مراجعه کنید و در صورتی که هنوز مشکلتان برطرف نشده ، مسئله را با ذکر جزئیات از طریق تیکت به بخش مربوطه گزارش دهید تا در اسرع وقت رسیدگی شود</p>
+        </div>
+        <div class="custom-form">
+            <form method="post" asp-action="Index" asp-controller="Ticket">
+                <p class="mb-0" id="error-msg"></p>
+                <div id="simple-msg"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">ارسال به <span class="text-danger">*</span></label>
+                            <select class="form-control" id="department" name="department">
+                                <option value="admin">مدیریت</option>
+                                <option value="techback">پشتیبانی فنی</option>
+                                <option value="finance">گردش مالی</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label">آی دی تیکت <span class="text-danger">*</span></label>
+                            <input class="form-control" placeholder="تیکت آی دی :" asp-for="TicketId">
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label">موضوع</label>
+                            <input class="form-control" placeholder="موضوع :" asp-for="MessageSubject">
+                        </div>
+                    </div><!--end col-->
+
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <label class="form-label">متن تیکت <span class="text-danger">*</span></label>
+                            <textarea class="form-control" placeholder="پیام:" rows="4" asp-for="MessageBody"></textarea>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="d-grid">
+                            <button class="btn btn-primary" type="submit">ارسال تیکت</button>
+                        </div>
+                    </div><!--end col-->
+                </div><!--end row-->
+            </form>
+        </div><!--end custom-form-->
+    </div><!--end col-->
+</div>
+

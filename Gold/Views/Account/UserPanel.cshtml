@@ -1,0 +1,113 @@
+﻿@using Gold.Core.DTO.AccountDTO
+@model ShowUserDTO
+@{
+    ViewData["Title"] = "userpanel";
+}
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">پنل کاربری</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li aria-current="page" class="breadcrumb-item active">پنل کاربری </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+<div class="row">
+    <div class="col-lg-4 col-md-5 col-12">
+        <div class="card section-title bg-white p-4 shadow rounded border-0">
+            <ul class="nav nav-pills nav-justified flex-column bg-transparent mb-0" id="pills-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a aria-controls="pills-buying" aria-selected="true" class="nav-link rounded shadow active" data-bs-toggle="pill" href="#pills-buying" id="pills-buying-tab" role="tab">
+                        <div class="text-start py-1 px-3">
+                            <h6 class="mb-0">ویرایش اطلاعات</h6>
+                        </div>
+                    </a><!--end nav link-->
+                </li><!--end nav item-->
+
+                <li class="nav-item mt-3" role="presentation">
+                    <a aria-controls="pills-general" aria-selected="false" class="nav-link rounded shadow" data-bs-toggle="pill" href="#pills-general" id="pills-general-tab" role="tab" tabindex="-1">
+                        <div class="text-start py-1 px-3">
+                            <h6 class="mb-0">سوابق خرید</h6>
+                        </div>
+                    </a><!--end nav link-->
+                </li><!--end nav item-->
+
+                <li class="nav-item mt-3" role="presentation">
+                    <a aria-controls="pills-payment" aria-selected="false" class="nav-link rounded shadow" data-bs-toggle="pill" href="#pills-payment" id="pills-payment-tab" role="tab" tabindex="-1">
+                        <div class="text-start py-1 px-3">
+                            <h6 class="mb-0">سوابق فروش </h6>
+                        </div>
+                    </a><!--end nav link-->
+                </li><!--end nav item-->
+
+                <li class="nav-item mt-3" role="presentation">
+                    <a aria-controls="pills-support" aria-selected="false" class="nav-link rounded shadow" data-bs-toggle="pill" href="#pills-support" id="pills-support-tab" role="tab" tabindex="-1">
+                        <div class="text-start py-1 px-3">
+                            <h6 class="mb-0">سوالات پشتیبانی</h6>
+                        </div>
+                    </a><!--end nav link-->
+                </li><!--end nav item-->
+            </ul><!--end nav pills-->
+        </div>
+    </div>
+    <div class="section col-lg-8 col-md-7 col-12">
+        <div class="container">
+            <div class="col-md-7 col-lg-8">
+                <div class="card rounded shadow p-4 border-0">
+                    <h4 class="mb-3">اطلاعات کاربری</h4>                    
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label class="form-label" for="UserName">نام کاربری</label>
+                                <p asp-for="UserName" type="text">@Model.UserName</p>
+                                <p class="invalid-feedback" asp-validation-for="UserName"></p>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label" for="FirstName">نام کوچک</label>
+                                <p asp-for="FirstName"  type="text">@Model.FirstName</p>
+                                <p class="invalid-feedback" asp-validation-for="FirstName"></p>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label class="form-label" for="LastName">نام خانوادگی</label>
+                                <p asp-for="LastName" type="text">@Model.LastName</p>
+                                <p class="invalid-feedback" asp-validation-for="LastName"></p>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label" for="Phone">شماره موبایل</label>
+                                <p asp-for="Phone" type="text">@Model.Phone</p>
+                                <p class="invalid-feedback" asp-validation-for="Phone"></p>
+                            </div>
+
+
+                            <a class="w-100 btn btn-primary" type="button" asp-controller="Account" asp-action="EditUser">ویرایش اطلاعات</a>
+                            @if (ViewBag.Errors != null)
+                            {
+                                <div class="text-red ml">
+                                    <ul>
+                                        @foreach (string error in ViewBag.Errors)
+                                        {
+                                            <li class="ml">@error</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

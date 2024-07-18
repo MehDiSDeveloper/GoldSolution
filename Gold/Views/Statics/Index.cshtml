@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "لیست فاکتور های سیستم";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">لیست نقش ها</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">ادمین</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">لیست نقش ها </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+<div class="container">
+
+    <div class="my-2">
+        <h4 class="mb-3">آمار</h4>
+        <div class="card rounded shadow p-4 border-0 content-blue-green">
+            @if (User.IsInRole("Admin") || User.IsInRole("MainAdmin"))
+            {
+                <div class="row m-5">
+                    <div class="col-3">Total Views:</div>
+                    <div class="col-3">
+                        <span id="totalViewsCounter"></span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div id="ajax">
+        <div id="ajax2">
+            
+        </div>
+    </div>
+</div><!--end container-->
+@section Scripts{
+    <script type="text/javascript" src="/js/Ajax/sysBillListAjax.js"></script>
+}
+
+
+

@@ -1,0 +1,60 @@
+﻿@using Gold.Core.DTO.RoleDTO
+@model AddOrEditRoleDTO
+@{
+    ViewData["Title"] = "AddRole";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">ورود به حساب کاربری</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">پنل کاربری</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">ورود </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+<div class="section">
+    <div class="container">
+        <div class="col-md-7 col-lg-8">
+            <div class="card rounded shadow p-4 border-0">
+                <h4 class="mb-3">ثبت نام</h4>
+                <div class="container col-md-12">
+                    @if (ViewBag.Errors != null)
+                    {
+                        @foreach (string error in ViewBag.Errors)
+                        {
+                            <span class="row text-bg-danger">@error</span>
+                        }
+                    }
+                </div>
+                <form method="post" asp-controller="ManageRoles" asp-action="AddRole">
+                    <div class="row g-3">
+
+
+                        <div class="col-12">
+                            <label class="form-label" for="Name">عنوان نقش</label>
+                            <input asp-for="Name" class="form-control" placeholder="عنوان نقش" type="text">
+                            <span class="invalid-feedback" asp-validation-for="Name"></span>
+                        </div>
+                        <button class="w-100 btn btn-primary" type="submit">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

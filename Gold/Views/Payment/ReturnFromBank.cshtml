@@ -1,0 +1,72 @@
+﻿@using Gold.Core.DTO.PayDTO
+@model TransactionDTO
+@{
+    ViewData["Title"] = "نتیجه پرداخت";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">ورود به حساب کاربری</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">پنل کاربری</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">ورود </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+
+<div class="container  align-content-center ">
+
+    @if (ViewBag.success == true)
+    {
+        <div class="col-lg-12 col-md-12 my-5">
+            <div class=" card pricing bg-success bg-gradient text-center border-0 rounded py-5">
+                <h4 class="mb-0 text-white title-dark">تراکنش موفق</h4>
+
+                <div class="my-5">
+                    <h4 class="display-2 fw-medium text-white title-dark mb-0"> شماره پیگیری: @ViewBag.code</h4>
+                    <h3 class="text-white my-3">مبلغ @Model.Cash.ToString("N0") تومان از درگاه بانکی پرداخت شد</h3>
+                </div>
+
+                <ul class="list-unstyled mb-0">
+                    @if (Model.PayWay == "bankwallet")
+                    {
+                        <li class="text-white-50 mt-3">مبلغ @Model.AssetCash.ToString("N0")  تومان از کیف پول برداشت شد</li>
+                    }
+                </ul>
+
+                <div class="mt-5">
+                    <a class="btn btn-lg btn-soft-dark" asp-action="UserOrdersList" asp-controller="Gold">برو به فاکتور های من</a>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="col-lg-12 col-md-12 my-5">
+            <div class=" card pricing bg-warning bg-gradient text-center border-0 rounded py-5">
+                <h4 class="mb-0 text-white title-dark text-danger">تراکنش ناموفق</h4>
+
+                <div class="my-5">
+                    <h3 class="text-white mb-0">در صورتی که مبلغ از حسابتان کسر شود، ظرف مدت 72 ساعت به حساب شما باز خواهد گشت</h3>
+                </div>
+                <div class="mt-5">
+                    <a class="btn btn-lg btn-soft-dark" asp-action="UserOrdersList" asp-controller="Gold">برو به فاکتور های من</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

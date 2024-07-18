@@ -1,0 +1,85 @@
+﻿@using Gold.Core.DTO.AccountDTO
+@using Gold.Core.DTO.RoleDTO
+@using Gold.Core.Domain.IdentityEntities
+@model EditUserDTO
+@{
+    ViewData["Title"] = "EditUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Roles = ViewBag.Roles as List<ShowRoleDTO>;
+    var UserRoles = ViewBag.UserRoles as List<string>;
+}
+
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="table-responsive bg-white shadow rounded">
+
+                    @if (Model != null)
+                    {
+
+                        <form method="post" asp-controller="ManageUsers" asp-action="EditUser">
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <input asp-for="Id" class="form-control" placeholder="نام کوچک" type="hidden" value=@Model.Id>
+
+                                    <label class="form-label" for="FirstName">نام</label>                                    
+                                    <input asp-for="FirstName" class="form-control" placeholder="نام کوچک" type="text" value=@Model.FirstName>
+                                    <span class="invalid-feedback" asp-validation-for="FirstName"></span>
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <label class="form-label" for="LastName">نام خانوادگی</label>
+                                    <input asp-for="LastName" class="form-control" placeholder="نام خانوادگی" type="text" value=@Model.LastName>
+                                    <span class="invalid-feedback" asp-validation-for="LastName"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label" for="UserName">نام کاربری</label>
+                                    <input asp-for="UserName" class="form-control" placeholder="نام کاربری" type="text" value=@Model.UserName>
+                                    <span class="invalid-feedback" asp-validation-for="UserName"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label" for="Phone">شماره تلفن همراه </label>
+                                    <input asp-for="Phone" class="form-control" type="text" placeholder="شماره تلفن همراه" value=@Model.Phone>
+                                    <span class="invalid-feedback" asp-validation-for="Phone"></span>
+                                </div>
+                                
+                                    @if (Roles != null)
+                                    {
+                                        @foreach (var role in Roles)
+                                        {
+                                            <div class="col-sm-6">
+                                                <input type="checkbox" name="selectedRoles" @((UserRoles.Contains(role.Name))?"checked":"") value=@role.Name>
+                                                <label class="form-label" for="selectedRoles">@role.Name </label>
+                                            </div>
+
+                                        }
+                                    }
+
+                                    <button class="w-100 btn btn-primary" type="submit">ثبت تغییرات</button>
+                                    @if (ViewBag.Errors != null)
+                                    {
+                                        <div class="text-red ml">
+                                            <ul>
+                                                @foreach (string error in ViewBag.Errors)
+                                                {
+                                                    <li class="ml">@error</li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                
+
+                        </form>
+                    }
+                    else
+                    {
+                        <h3>کاربر یافت نشد</h3>
+                    }
+
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+    </div><!--end container-->
+</section>
+

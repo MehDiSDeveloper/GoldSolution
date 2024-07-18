@@ -1,0 +1,107 @@
+﻿@using Gold.Core.DTO.Finance
+@model IEnumerable<UserBillDTO>
+@{
+    Layout = null;
+}
+
+
+<div class="row bg-white shadow rounded mb-4">
+    <table class="table mb-0 table-center content-blue-green ">
+        <thead>
+            <tr class="shop-list">
+                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 80px;">نوع</th>
+                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 100px;">کاربر</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 90px;">عرضه</th>
+                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 90px;">آیدی </th>
+                <th class="border-bottom fw-medium text-start py-3 text-center" style="min-width: 100px;">میزان اعمال</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">باقیمانده</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">زمان ثبت</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">زمان اعمال</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 100px;">انتظار</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 80px;">وضعیت</th>
+                <th class="border-bottom fw-medium text-end py-3 pe-4 text-center" style="min-width: 180px;">عملیات</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var bill in Model)
+                {
+                    if (bill.Type == "خرید")
+                    {
+                        <tr class=" shadow features features-classic p-4 rounded-md border-0 bg-gradient border-primary @((bill.IsDone)?"bg-secondary text-body":(bill.IsActive)?"bg-soft-grey":"bg-soft-primary  text-muted")">
+                            <td class="h6 text-center col-1 text-primary">@bill.Type</td>
+                            <td class="h6 text-center col-1">@((bill.ToAppUser != null) ? bill.ToAppUser.UserName : "نامعلوم")</td>
+                            <td class="h6 text-center col-1">@(bill.TotalCashAmount.ToString("N0"))</td>
+                            <td class="h6 text-center col-1">@(bill.EarnedGold) گرم</td>
+                            <td class="h6 text-center col-1">@bill.DonePercent %</td>
+                            <td class="h6 text-center col-1">@(bill.LeftCash.ToString("N0"))</td>
+                            <td class="text-center col-1">@bill.DateTime</td>
+                            @{
+                                if (@bill.ExecutionTime == DateTime.MinValue)
+                                {
+                                    <td class="h6 text-center col-1">--</td>
+                                    <td class="h6 text-center col-1">--</td>
+                                }
+                                else
+                                {
+                                    <td class="h6 text-center col-1">@bill.ExecutionTime</td>
+                                    <td class="h6 text-center col-1">@bill.Delay</td>
+                                };
+                            }
+                            <td class="text-center col-1">@((bill.IsDone) ? "اتمام" : (bill.IsActive) ? "فعال" : "معلق")</td>
+
+                            <td class="text-center col-1">
+                                @*<form method="post" asp-controller="ManageGold" asp-action="SwitchSusspendBill" asp-route-id=@bill.Id asp-route-billType="userBuy" asp-route-con="ManageGold" asp-route-act="UsersGoldBillsList">*@
+                                    <a class="btn btn-pills btn-icon text-white bg-blue-green" asp-controller="ManageGold" asp-action="EditUserBill" asp-route-id=@bill.Id>ویرایش</a>
+                                <a class="btn btn-pills btn-icon btn-warning qty-btn switchSuspendButton" idVal=@bill.Id billTypeVal="userBuy">@((bill.IsActive) ? "خاموش" : "روشن")</a>
+                                    <a class="btn btn-pills btn-icon text-white bg-blue-green ExecuteBuyUserBillButton" myVal="@bill.Id">اعمال</a>
+                                @*</form>*@
+
+                            </td>
+                        </tr>
+                    }
+                    if (bill.Type == "فروش")
+                    {
+                        <tr class=" border-warning  bg-gradient-white-overlay  my-2 @((bill.IsDone)?"bg-secondary text-body":(bill.IsActive)?"bg-soft-grey ":"bg-soft-warning  text-muted")">
+                            <td class="h6 text-center col-1 text-warning">@bill.Type</td>
+                            <td class="h6 text-center col-1">@((bill.ToAppUser != null) ? bill.ToAppUser.UserName : "نامعلوم")</td>
+                            <td class="h6 text-center col-1">@bill.TotalGoldAmount گرم</td>
+                            <td class="h6 text-center col-1">@bill.EarnedCash تومان</td>
+                            <td class="h6 text-center col-1">@bill.DonePercent %</td>
+                            <td class="h6 text-center col-1">@bill.LeftGold گرم</td>
+                            <td class="h6 text-center col-1">@bill.DateTime</td>
+                            @{
+                                if (@bill.ExecutionTime == DateTime.MinValue)
+                                {
+                                    <td class="h6 text-center col-1">--</td>
+                                    <td class="h6 text-center col-1">--</td>
+                                }
+                                else
+                                {
+                                    <td class="h6 text-center col-1">@bill.ExecutionTime</td>
+                                    <td class="h6 text-center col-1">@bill.Delay</td>
+                                };
+                            }
+
+                            <td class="text-center col-1">@((bill.IsDone) ? "اتمام" : (bill.IsActive) ? "فعال" : "معلق")</td>
+                            <td class="text-center col-1">
+                                @*<form method="post" asp-controller="ManageGold" asp-action="SwitchSusspendBill" asp-route-id=@bill.Id asp-route-billType="userSell" asp-route-con="ManageGold" asp-route-act="UsersGoldBillsList">*@
+                                    <a class="btn btn-pills btn-icon text-white bg-blue-green qty-btn" asp-controller="ManageGold" asp-action="EditUserBill" asp-route-id=@bill.Id>ویرایش</a>
+                                <a class="btn btn-pills btn-icon btn-warning qty-btn switchSuspendButton" idVal=@bill.Id billTypeVal="userSell">@((bill.IsActive) ? "خاموش" : "روشن")</a>
+                                    <a class="btn btn-pills btn-icon text-white bg-blue-green ExecuteSellUserBillButton" myVal="@bill.Id">اعمال</a>
+                                @*</form>*@
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr>فاکتوری یافت نشد</tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!--end row-->

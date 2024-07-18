@@ -1,0 +1,121 @@
+﻿@{
+    ViewData["Title"] = "لیست تراکنش های کاربران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="bg-half-80 d-table bg-primary bg-gradient w-100">
+    <div class="bg-overlay bg-gradient-overlay"></div>
+    <div class="container">
+        <div class="row mt-5 justify-content-center">
+            <div class="col-12">
+                <div class="title-heading text-center">
+                    <small class="text-white-50 mb-1 fw-medium text-uppercase mx-auto">طلا باز</small>
+
+                    <h5 class="heading fw-semibold mb-0 page-heading text-white title-dark">لیست تراکنش های کاربران</h5>
+                </div>
+            </div><!--end col-->
+        </div><!--end row-->
+
+        <div class="position-middle-bottom">
+            <nav aria-label="breadcrumb" class="d-block">
+                <ul class="breadcrumb breadcrumb-muted mb-0 p-0">
+                    <li class="breadcrumb-item"><a href="index.html"> طلا باز </a></li>
+                    <li class="breadcrumb-item"><a href="index-fashion.html">ادمین</a></li>
+                    <li aria-current="page" class="breadcrumb-item active">لیست تراکنش های کاربران </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!--end container-->
+</section>
+<div class="container">
+
+    <div class="my-4">
+        <h4 class="mb-3">جستجو</h4>
+        <div class="card rounded shadow p-4 border-0 content-blue-green">
+            <form class="needs-validation" id="searchBillForm" novalidate="" asp-action="UsersGoldBillsList" asp-controller="ManageGold" method="get">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label" for="searchString">جستجو متنی</label>
+                        <input class="form-control border-blue-green" id="searchString" value=@ViewBag.SearchString type="text" name="searchString">
+                        <div class="invalid-feedback"> متن وارد شده قابل قبول نیست </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-5 mb-3">
+                        <div class="row mb-2">
+                            <h5 class="col-md-3">وضعیت</h5>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="status" required="" type="radio" checked value="all" @((ViewBag.status == "all") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">همه</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="status" required="" type="radio" value="active" @((ViewBag.status == "active") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">فعال</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="status" type="radio" value="suspend" @((ViewBag.status == "suspend") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">معلق</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" name="status" required="" type="radio" value="done" @((ViewBag.status == "done") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">اتمام</label>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <h5 class=" col-md-3">نوع</h5>
+
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="credit" name="type" type="radio" checked value="all" @((ViewBag.type == "all") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">همه</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="credit" name="type" type="radio" value="buy" @((ViewBag.type == "buy") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">خرید</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" id="credit" name="type" type="radio" value="sell" @((ViewBag.type == "sell") ? "checked" : "")>
+                                    <label class="form-check-label" for="credit">فروش</label>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a class=" btn btn-soft-info resetSearchBtn col-md-10 border-blue-gree" asp-action="UsersGoldBillsList" asp-controller="ManageGold" type="button">حذف فیلتر ها</a>
+                    </div>
+                    <div class="col-md-9">
+                        <button class=" btn btn-info col-md-12" type="submit">اعمال</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="ajax">
+        <div id="ajax2">
+            <partial name="_UsersGoldBillsListPartial"></partial>
+        </div>
+    </div>
+</div><!--end container-->
+@section Scripts{
+    <script type="text/javascript" src="/js/Ajax/userBillListAjax.js"></script>
+    }
+
+
+
